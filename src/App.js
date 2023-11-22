@@ -2,22 +2,40 @@ import { useState } from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
 import Movie from "./components/Movie";
 import FavMovie from "./components/FavMovie";
+import { useDispatch, useSelector } from "react-redux";
+import { addToList } from "./actions/favoritesActions";
+import { movies } from "./movies.js";
 
 function App() {
   const [sira, setSira] = useState(0);
-  const favMovies = [];
+  const favMovies = useSelector((state) => state.favorites.favorites);
 
   function sonrakiFilm() {
     setSira(sira + 1);
   }
+  const dispatch = useDispatch();
+
+  const addToListHandler = () => {
+    const movie = movies[sira];
+    dispatch(addToList(movie));
+  };
 
   return (
     <div className="wrapper max-w-2xl mx-auto">
       <nav className="flex text-2xl pb-6 pt-8 gap-2 justify-center">
-        <NavLink to="/" exact className="py-3 px-6 " activeClassName="bg-white shadow-sm text-blue-600">
+        <NavLink
+          to="/"
+          exact
+          className="py-3 px-6 "
+          activeClassName="bg-white shadow-sm text-blue-600"
+        >
           Filmler
         </NavLink>
-        <NavLink to="/listem" className="py-3 px-6 " activeClassName="bg-white shadow-sm text-blue-600">
+        <NavLink
+          to="/listem"
+          className="py-3 px-6 "
+          activeClassName="bg-white shadow-sm text-blue-600"
+        >
           Listem
         </NavLink>
       </nav>
@@ -32,7 +50,10 @@ function App() {
             >
               Sıradaki
             </button>
-            <button className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white">
+            <button
+              onClick={addToListHandler}
+              className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white"
+            >
               Listeme ekle
             </button>
           </div>
