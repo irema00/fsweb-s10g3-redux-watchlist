@@ -14,7 +14,14 @@ function App() {
     setSira(sira + 1);
   }
   const dispatch = useDispatch();
-
+  function oncekiFilm() {
+    if (sira > 0) {
+      setSira(sira - 1);
+    }
+  }
+  function basaDon() {
+    setSira(0);
+  }
   const addToListHandler = () => {
     const movie = movies[sira];
     dispatch(addToList(movie));
@@ -45,11 +52,27 @@ function App() {
 
           <div className="flex gap-3 justify-end py-3">
             <button
-              onClick={sonrakiFilm}
+              onClick={basaDon}
               className="select-none px-4 py-2 border border-blue-700 text-blue-700 hover:border-blue-500 hover:text-blue-500"
             >
-              Sıradaki
+              Başa Dön
             </button>
+            {sira > 0 && (
+              <button
+                onClick={oncekiFilm}
+                className="select-none px-4 py-2 border border-blue-700 text-blue-700 hover:border-blue-500 hover:text-blue-500"
+              >
+                Önceki
+              </button>
+            )}
+            {sira < movies.length - 1 && (
+              <button
+                onClick={sonrakiFilm}
+                className="select-none px-4 py-2 border border-blue-700 text-blue-700 hover:border-blue-500 hover:text-blue-500"
+              >
+                Sıradaki
+              </button>
+            )}
             <button
               onClick={addToListHandler}
               className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white"
